@@ -6,6 +6,9 @@ var mapController = {
     var latLng = options.latLng || [37.78, -122.41];
     var zoom = options.zoom || 17;
     this.map = L.mapbox.map('map', 'samsamskies.lp1kmn3p')
+      .addControl(L.mapbox.geocoderControl('mapbox.places', {
+        autocomplete: true
+      }))
       .setView(latLng, zoom);
     this.addMarkers();
 

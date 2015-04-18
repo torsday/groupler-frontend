@@ -8,7 +8,14 @@ require('./map')(mapOptions);
 $('.modal').modal('show');
 $('#btn-submit').on('click', function() {
   var url = 'http://localhost:3000/users';
-  var data = $('form').serialize();
+  var data = {
+    user: {
+      email: $('#email').val(),
+      address: $('#address').val()
+    }
+  };
+
+  debugger
   $.post(url, data)
     .done(function() {
       $('.modal').modal('hide');

@@ -15,7 +15,6 @@ $('#btn-submit').on('click', function() {
     }
   };
 
-  debugger
   $.post(url, data)
     .done(function() {
       $('.modal').modal('hide');

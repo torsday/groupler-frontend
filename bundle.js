@@ -21,9 +21,7 @@ $('#btn-submit').on('click', function() {
       $('.modal').modal('hide');
     });
 });
-},{"./map":3,"./mocks":4}],2:[function(require,module,exports){
-
-},{}],3:[function(require,module,exports){
+},{"./map":2,"./mocks":3}],2:[function(require,module,exports){
 var mapController = {
   initialize: function(options) {
     options = options || {};
@@ -84,7 +82,7 @@ var mapController = {
 module.exports = function(options) {
   mapController.initialize(options);
 };
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 var mocks = {
   initialize: function(apiBaseUrl) {
     apiBaseUrl = apiBaseUrl || 'http://localhost:3000';

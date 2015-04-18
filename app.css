@@ -6,7 +6,7 @@ body {
   position:absolute; top:0; bottom:0; width:100%;
 }
 
-#auction-link {
+#auctions-link {
   position: fixed;
   right: 100px;
   top: 20px;

@@ -17,10 +17,14 @@ var mapController = {
       throw new Error('Map is not initialized');
     }
 
-    return Promise.resolve( $.get('http://example.com/users') )
+    var url = 'http://localhost:3000/users';
+
+    return Promise.resolve( $.get(url) )
       .bind(this)
       .then(function(response) {
-        response.users.forEach(function(user) {
+        var users = response.users || response;
+
+        users.forEach(function(user) {
 
           L.mapbox.featureLayer({
             type: 'Feature',

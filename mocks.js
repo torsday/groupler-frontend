@@ -1,6 +1,6 @@
 var mocks = {
   initialize: function(apiBaseUrl) {
-    apiBaseUrl = apiBaseUrl || 'http://example.com';
+    apiBaseUrl = apiBaseUrl || 'http://localhost:3000';
     $.mockjax({
       url: apiBaseUrl + '/users',
       responseText: {

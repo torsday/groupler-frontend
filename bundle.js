@@ -29,10 +29,14 @@ var mapController = {
       throw new Error('Map is not initialized');
     }
 
-    return Promise.resolve( $.get('http://example.com/users') )
+    var url = 'http://localhost:3000/users';
+
+    return Promise.resolve( $.get(url) )
       .bind(this)
       .then(function(response) {
-        response.users.forEach(function(user) {
+        var users = response.users || response;
+
+        users.forEach(function(user) {
 
           L.mapbox.featureLayer({
             type: 'Feature',
@@ -66,7 +70,7 @@ module.exports = function(options) {
 },{}],4:[function(require,module,exports){
 var mocks = {
   initialize: function(apiBaseUrl) {
-    apiBaseUrl = apiBaseUrl || 'http://example.com';
+    apiBaseUrl = apiBaseUrl || 'http://localhost:3000';
     $.mockjax({
       url: apiBaseUrl + '/users',
       responseText: {

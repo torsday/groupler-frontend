@@ -7,6 +7,14 @@ var mapOptions = {
 require('./map')(mapOptions);
 
 $('.modal').modal('show');
+$('#btn-submit').on('click', function() {
+  var url = 'http://localhost:3000/users';
+  var data = $('form').serialize();
+  $.post(url, data)
+    .done(function() {
+      $('.modal').modal('hide');
+    });
+});
 },{"./map":3,"./mocks":4}],2:[function(require,module,exports){
 
 },{}],3:[function(require,module,exports){
@@ -53,7 +61,7 @@ var mapController = {
                 ]
             },
             properties: {
-                title: user.price_paid ? 'price paid $' + user.price_paid : '',
+                title: user.price_paid ? 'Total cost of ownership $' + user.price_paid : '',
                 description: user.address,
                 // one can customize markers by adding simplestyle properties
                 // https://www.mapbox.com/guides/an-open-platform/#simplestyle
@@ -92,7 +100,7 @@ var mocks = {
             lat: 37.807416,
             lng: -122.268542,
             category: 4,
-            price_paid: 1500
+            price_paid: 15000
           },
           {
             email: 'testing@example.com',
@@ -100,10 +108,16 @@ var mocks = {
             lat: 37.806871,
             lng: -122.268888,
             category: 4,
-            price_paid: 2000
+            price_paid: 12000
           }
         ]
       }
+    });
+
+    $.mockjax({
+      url: apiBaseUrl + '/users',
+      type: 'post',
+      data: { email: 'testing@example.com', address: '1624 Franklin St., Oakland CA' }
     });
   }
 };

@@ -19,7 +19,7 @@ var mocks = {
             lat: 37.807416,
             lng: -122.268542,
             category: 4,
-            price_paid: 1500
+            price_paid: 15000
           },
           {
             email: 'testing@example.com',
@@ -27,10 +27,16 @@ var mocks = {
             lat: 37.806871,
             lng: -122.268888,
             category: 4,
-            price_paid: 2000
+            price_paid: 12000
           }
         ]
       }
+    });
+
+    $.mockjax({
+      url: apiBaseUrl + '/users',
+      type: 'post',
+      data: { email: 'testing@example.com', address: '1624 Franklin St., Oakland CA' }
     });
   }
 };

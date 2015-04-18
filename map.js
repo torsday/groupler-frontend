@@ -41,7 +41,7 @@ var mapController = {
                 ]
             },
             properties: {
-                title: user.price_paid ? 'price paid $' + user.price_paid : '',
+                title: user.price_paid ? 'Total cost of ownership $' + user.price_paid : '',
                 description: user.address,
                 // one can customize markers by adding simplestyle properties
                 // https://www.mapbox.com/guides/an-open-platform/#simplestyle

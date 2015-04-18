@@ -6,3 +6,11 @@ var mapOptions = {
 require('./map')(mapOptions);
 
 $('.modal').modal('show');
+$('#btn-submit').on('click', function() {
+  var url = 'http://localhost:3000/users';
+  var data = $('form').serialize();
+  $.post(url, data)
+    .done(function() {
+      $('.modal').modal('hide');
+    });
+});

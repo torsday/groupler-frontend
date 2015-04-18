@@ -6,6 +6,7 @@ var mapOptions = {
 };
 require('./map')(mapOptions);
 
+$('.modal').modal('show');
 },{"./map":3,"./mocks":4}],2:[function(require,module,exports){
 
 },{}],3:[function(require,module,exports){

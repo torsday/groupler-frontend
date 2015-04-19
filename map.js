@@ -15,6 +15,29 @@ var mapController = {
     return this.map;
   },
 
+  addUserAsMarker: function(user) {
+    L.mapbox.featureLayer({
+      type: 'Feature',
+      geometry: {
+          type: 'Point',
+          // coordinates here are in longitude, latitude order because
+          // x, y is the standard for GeoJSON and many formats
+          coordinates: [
+            user.lng,
+            user.lat
+          ]
+      },
+      properties: {
+          title: user.price_paid ? 'Total cost of ownership $' + user.price_paid : '',
+          description: user.address,
+          // one can customize markers by adding simplestyle properties
+          // https://www.mapbox.com/guides/an-open-platform/#simplestyle
+          'marker-size': 'large',
+          'marker-color': user.price_paid ? '#7FFF00' : '#229CDC',
+      }
+    }).addTo(this.map);
+  },
+
   addMarkers: function() {
     if (!this.map) {
       throw new Error('Map is not initialized');
@@ -28,28 +51,7 @@ var mapController = {
         var users = response.users || response;
 
         users.forEach(function(user) {
-
-          L.mapbox.featureLayer({
-            type: 'Feature',
-            geometry: {
-                type: 'Point',
-                // coordinates here are in longitude, latitude order because
-                // x, y is the standard for GeoJSON and many formats
-                coordinates: [
-                  user.lng,
-                  user.lat
-                ]
-            },
-            properties: {
-                title: user.price_paid ? 'Total cost of ownership $' + user.price_paid : '',
-                description: user.address,
-                // one can customize markers by adding simplestyle properties
-                // https://www.mapbox.com/guides/an-open-platform/#simplestyle
-                'marker-size': 'large',
-                'marker-color': user.price_paid ? '#7FFF00' : '#229CDC',
-            }
-          }).addTo(this.map);
-
+          this.addUserAsMarker(user);
         }, this);
       });
   }

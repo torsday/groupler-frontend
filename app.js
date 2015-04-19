@@ -3,7 +3,7 @@ require('./mocks');
 var mapOptions = {
   latLng: [37.806241, -122.269279]
 };
-require('./map')(mapOptions);
+var map = require('./map')(mapOptions);
 
 $('.modal').modal('show');
 $('#btn-submit').on('click', function() {
@@ -16,7 +16,8 @@ $('#btn-submit').on('click', function() {
   };
 
   $.post(url, data)
-    .done(function() {
+    .done(function(user) {
+      map.addUserAsMarker(user);
       $('.modal').modal('hide');
     });
 });

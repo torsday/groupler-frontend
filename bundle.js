@@ -4,7 +4,7 @@ require('./mocks');
 var mapOptions = {
   latLng: [37.806241, -122.269279]
 };
-require('./map')(mapOptions);
+var map = require('./map')(mapOptions);
 
 $('.modal').modal('show');
 $('#btn-submit').on('click', function() {
@@ -17,11 +17,14 @@ $('#btn-submit').on('click', function() {
   };
 
   $.post(url, data)
-    .done(function() {
+    .done(function(user) {
+      map.addUserAsMarker(user);
       $('.modal').modal('hide');
     });
 });
-},{"./map":2,"./mocks":3}],2:[function(require,module,exports){
+},{"./map":3,"./mocks":4}],2:[function(require,module,exports){
+
+},{}],3:[function(require,module,exports){
 var mapController = {
   initialize: function(options) {
     options = options || {};
@@ -39,6 +42,29 @@ var mapController = {
     return this.map;
   },
 
+  addUserAsMarker: function(user) {
+    L.mapbox.featureLayer({
+      type: 'Feature',
+      geometry: {
+          type: 'Point',
+          // coordinates here are in longitude, latitude order because
+          // x, y is the standard for GeoJSON and many formats
+          coordinates: [
+            user.lng,
+            user.lat
+          ]
+      },
+      properties: {
+          title: user.price_paid ? 'Total cost of ownership $' + user.price_paid : '',
+          description: user.address,
+          // one can customize markers by adding simplestyle properties
+          // https://www.mapbox.com/guides/an-open-platform/#simplestyle
+          'marker-size': 'large',
+          'marker-color': user.price_paid ? '#7FFF00' : '#229CDC',
+      }
+    }).addTo(this.map);
+  },
+
   addMarkers: function() {
     if (!this.map) {
       throw new Error('Map is not initialized');
@@ -52,28 +78,7 @@ var mapController = {
         var users = response.users || response;
 
         users.forEach(function(user) {
-
-          L.mapbox.featureLayer({
-            type: 'Feature',
-            geometry: {
-                type: 'Point',
-                // coordinates here are in longitude, latitude order because
-                // x, y is the standard for GeoJSON and many formats
-                coordinates: [
-                  user.lng,
-                  user.lat
-                ]
-            },
-            properties: {
-                title: user.price_paid ? 'Total cost of ownership $' + user.price_paid : '',
-                description: user.address,
-                // one can customize markers by adding simplestyle properties
-                // https://www.mapbox.com/guides/an-open-platform/#simplestyle
-                'marker-size': 'large',
-                'marker-color': user.price_paid ? '#7FFF00' : '#229CDC',
-            }
-          }).addTo(this.map);
-
+          this.addUserAsMarker(user);
         }, this);
       });
   }
@@ -82,7 +87,7 @@ var mapController = {
 module.exports = function(options) {
   mapController.initialize(options);
 };
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 var mocks = {
   initialize: function(apiBaseUrl) {
     apiBaseUrl = apiBaseUrl || 'http://localhost:3000';
@@ -121,10 +126,18 @@ var mocks = {
     $.mockjax({
       url: apiBaseUrl + '/users',
       type: 'post',
-      data: { email: 'testing@example.com', address: '1624 Franklin St., Oakland CA' }
+      data: { email: 'testing5@example.com', address: '11926 Franklin St., Oakland, CA' },
+      responseText: {
+        email: 'testing5@example.com',
+        address: '1926 Franklin St., Oakland, CA',
+        lat: 37.808172,
+        lng: -122.268068,
+        category: 4,
+        price_paid: 20000
+      }
     });
   }
 };
 
 module.exports = mocks.initialize();
-},{}]},{},[1,2,3]);
+},{}]},{},[1,2,3,4]);

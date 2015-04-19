@@ -36,7 +36,15 @@ var mocks = {
     $.mockjax({
       url: apiBaseUrl + '/users',
       type: 'post',
-      data: { email: 'testing@example.com', address: '1624 Franklin St., Oakland CA' }
+      data: { email: 'testing5@example.com', address: '11926 Franklin St., Oakland, CA' },
+      responseText: {
+        email: 'testing5@example.com',
+        address: '1926 Franklin St., Oakland, CA',
+        lat: 37.808172,
+        lng: -122.268068,
+        category: 4,
+        price_paid: 20000
+      }
     });
   }
 };

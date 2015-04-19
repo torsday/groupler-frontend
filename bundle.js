@@ -1,10 +1,10 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-require('./mocks');
+// require('./mocks');
 
 var mapOptions = {
   latLng: [37.806241, -122.269279]
 };
-var map = require('./map')(mapOptions);
+var mapController = require('./map')(mapOptions);
 
 $('.modal').modal('show');
 $('#btn-submit').on('click', function() {
@@ -18,11 +18,11 @@ $('#btn-submit').on('click', function() {
 
   $.post(url, data)
     .done(function(user) {
-      map.addUserAsMarker(user);
+      mapController.addUserAsMarker(user);
       $('.modal').modal('hide');
     });
 });
-},{"./map":3,"./mocks":4}],2:[function(require,module,exports){
+},{"./map":3}],2:[function(require,module,exports){
 
 },{}],3:[function(require,module,exports){
 var mapController = {
@@ -39,7 +39,7 @@ var mapController = {
       .setView(latLng, zoom);
     this.addMarkers();
 
-    return this.map;
+    return this;
   },
 
   addUserAsMarker: function(user) {
@@ -85,7 +85,7 @@ var mapController = {
 };
 
 module.exports = function(options) {
-  mapController.initialize(options);
+  return mapController.initialize(options);
 };
 },{}],4:[function(require,module,exports){
 var mocks = {

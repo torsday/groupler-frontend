@@ -12,7 +12,7 @@ var mapController = {
       .setView(latLng, zoom);
     this.addMarkers();
 
-    return this.map;
+    return this;
   },
 
   addUserAsMarker: function(user) {
@@ -58,5 +58,5 @@ var mapController = {
 };
 
 module.exports = function(options) {
-  mapController.initialize(options);
+  return mapController.initialize(options);
 };

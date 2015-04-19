@@ -43,6 +43,8 @@ var mapController = {
   },
 
   addUserAsMarker: function(user) {
+    if (!user.lng || !user.lat) { return; }
+
     L.mapbox.featureLayer({
       type: 'Feature',
       geometry: {
